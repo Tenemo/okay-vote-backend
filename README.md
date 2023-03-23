@@ -1,2 +1,2 @@
-# okay-vote-server
+# okay-vote-backend
 okay.vote
