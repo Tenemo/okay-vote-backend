@@ -1,5 +1,5 @@
 import Fastify, { FastifyInstance } from 'fastify';
-import FastifyPostgres from 'fastify-postgres';
+import FastifyPostgres from '@fastify/postgres';
 import dotenv from 'dotenv';
 
 import vote from 'routes/vote';
@@ -14,7 +14,6 @@ const buildServer = async (): Promise<FastifyInstance> => {
     const fastify = Fastify({
         logger: {
             level: process.env.LOG_LEVEL ?? 'info',
-            prettyPrint: !!(process.env.PRETTY_PRINT === 'true'),
         },
     });
     await fastify.register(FastifyPostgres, {

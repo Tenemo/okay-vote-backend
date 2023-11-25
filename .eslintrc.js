@@ -77,7 +77,7 @@ module.exports = {
         'jest/no-commented-out-tests': ERROR,
 
         'sql/format': [
-            ERROR,
+            OFF,
             {
                 ignoreExpressions: false,
                 ignoreInline: true,

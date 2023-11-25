@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { Type, Static } from '@sinclair/typebox';
-import SQL from '@nearform/sql';
+import sql from '@nearform/sql';
 import createError from 'http-errors';
 import gmean from 'gmean';
 
@@ -19,7 +19,6 @@ const PollResponse = Type.Object({
 type PollResponse = Static<typeof PollResponse>;
 
 const schema = {
-    body: PollRequest,
     response: {
         200: PollResponse,
     },
@@ -32,7 +31,7 @@ const vote = async (fastify: FastifyInstance): Promise<void> => {
             req: FastifyRequest<{ Body: PollRequest }>,
         ): Promise<PollResponse> => {
             const pollId = (req.params as { pollId: string }).pollId;
-            const sqlFindExisting = SQL`
+            const sqlFindExisting = sql`
                 SELECT id, poll_name, created_at
                 FROM polls
                 WHERE id = ${pollId}`;
@@ -48,7 +47,7 @@ const vote = async (fastify: FastifyInstance): Promise<void> => {
                 );
             }
             const { poll_name: pollName, created_at: createdAt } = polls[0];
-            const sqlSelectPollsChoicesVotes = SQL`
+            const sqlSelectPollsChoicesVotes = sql`
                 SELECT
                     choices.choice_name,
                     votes.voter_name,
@@ -91,7 +90,7 @@ const vote = async (fastify: FastifyInstance): Promise<void> => {
                 {},
             );
 
-            const sqlSelectPollsChoices = SQL`
+            const sqlSelectPollsChoices = sql`
                 SELECT
                     choices.choice_name
                 FROM polls
